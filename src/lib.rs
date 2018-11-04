@@ -6,6 +6,7 @@ extern crate spin;
 extern crate volatile;
 extern crate uart_16550;
 extern crate x86_64;
+extern crate pic8259_simple;
 
 #[macro_use]
 extern crate lazy_static;
@@ -27,4 +28,10 @@ pub unsafe fn exit_qemu() {
 
     let mut port = Port::<u32>::new(0xf4);
     port.write(0);
+}
+
+pub fn hlt_loop() -> ! {
+    loop {
+        x86_64::instructions::hlt();
+    }
 }
